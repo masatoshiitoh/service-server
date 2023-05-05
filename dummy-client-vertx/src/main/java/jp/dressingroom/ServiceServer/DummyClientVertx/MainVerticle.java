@@ -46,10 +46,11 @@ public class MainVerticle extends AbstractVerticle {
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
-        cmds.add(new WebCommandSequence(1, GET, "/", null));
-        cmds.add(new WebCommandSequence(1000, HttpMethod.POST, "/command", "{\"k1\":\"v1\",\"k2\":\"v2\"}"));
-        cmds.add(new WebCommandSequence(2500, HttpMethod.POST, "/query", "{\"k1\":\"v1\",\"k2\":\"v2\"}"));
-        cmds.add(new WebCommandSequence(1700, GET, "/event", null));
+        cmds.add(new WebCommandSequence(1, GET, "/top/1/", null));
+        cmds.add(new WebCommandSequence(1000, HttpMethod.POST, "/command/1/", "{\"k1\":\"v1\",\"k2\":\"v2\"}"));
+        cmds.add(new WebCommandSequence(1000, HttpMethod.POST, "/query/1/", "{\"command\":\"get_status\",\"id\":1}"));
+        cmds.add(new WebCommandSequence(1000, HttpMethod.POST, "/query/1/", "{\"command\":\"get_status\",\"id\":2}"));
+        cmds.add(new WebCommandSequence(200, GET, "/event/1/", null));
         WebClient webClient = WebClient.create(vertx);
 
         vertx.createHttpServer().requestHandler(req -> {
